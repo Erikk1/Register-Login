@@ -1,6 +1,17 @@
+import tkinter
+import tkinter.messagebox
+
 from tkinter import * 
 import tkinter as tk
-from commands import regPress
+import json
+
+#from ButtonPress import regPress
+#import ButtonPress
+
+
+entry_1 = None;
+entry_2 = None;
+entry_3 = None;
 
 class ForFrames(tk.Tk):
     
@@ -35,15 +46,41 @@ class Registerform(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.controller = controller
 
-        #self.master = master
-        #self.root.title("Register form")
 
-        #self.geometry("250x150")
+        #def RegisterSuccess():
 
-        #self.bottomFrame = Frame(parent)
-        #self.bottomFrame.pack(side=BOTTOM)
-        # self.topFrame = Frame(parent)
-        #self.topFrame.pack(side=TOP)
+
+            # convert registered userinfo to json file
+        def regPress():
+            obj = (entry_1.get(),entry_2.get(),entry_3.get())
+
+       
+           
+            with open('userinfo.json', 'a+') as f:
+
+                data = json.dump(obj,f, indent=3)
+                # if passwords match and characters are in username entry
+                if entry_2.get() == entry_3.get() and not len(entry_1.get()) == 0:
+                    tkinter.messagebox.showinfo("Success","Registered, click OK to login")
+                    print("Registered")
+                
+                elif entry_2.get() != entry_3.get():
+                    tkinter.messagebox.showinfo("Failed","Passwords don't match")
+
+
+                elif len(entry_1.get()) == 0:
+                    tkinter.messagebox.showinfo("Failed","Please enter a username")
+                    
+
+                                #tkinter.messagebox.showinfo("Failed","Passwords don't match!")
+
+            #with open('userinfo.json', 'r') as f:
+             #   data = [json.loads(line) for line in f]
+
+
+
+
+                
         registerframe1 = Frame(self)
         registerframe1.pack(fill=X)
 
@@ -62,8 +99,8 @@ class Registerform(tk.Frame):
         label_3.pack(side=LEFT,padx=5,pady=5)
 
         entry_1 = Entry(registerframe1, width=50)
-        entry_2 = Entry(registerframe2, width=50)
-        entry_3 = Entry(registerframe3, width=50)
+        entry_2 = Entry(registerframe2, width=50, show='*')
+        entry_3 = Entry(registerframe3, width=50, show='*')
 
         entry_1.pack(side=RIGHT,padx=100)
         entry_2.pack(side=RIGHT,padx=100)
@@ -83,11 +120,15 @@ class Registerform(tk.Frame):
     
 
 
+        
+
 class Login(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self,parent)
         self.controller = controller
 
+
+  
         registerframe4 = Frame(self)
         registerframe4.pack(fill=X)
 
@@ -106,14 +147,13 @@ class Login(tk.Frame):
         entry_1.pack(side=RIGHT,padx=100)
         entry_2.pack(side=RIGHT,padx=100)
 
-    
-        
-
-
-        button1 = Button(self, text="Login")
+        button1 = tk.Button(self, text="Login")
         button1.pack(side=TOP)
-        button2 = Button(self, text="Don't have an account?", command=lambda: controller.show_frame("Registerform"))
+        button2 = tk.Button(self, text="Don't have an account?", command=lambda: controller.show_frame("Registerform"))
         button2.pack(side=BOTTOM)
+
+
+
 
     def close_window(self):
         self.master.destroy()
