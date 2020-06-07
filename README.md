@@ -1,2 +1,2 @@
 # Register-Login
-Register and Login using tkinter and sqlite3
+Register and Login GUI using tkinter and sqlite3
