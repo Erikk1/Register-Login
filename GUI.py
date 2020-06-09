@@ -3,8 +3,8 @@ import tkinter.messagebox
 import sqlite3
 from tkinter import * 
 import tkinter as tk
-
-
+from random import *
+import string
 
 
 entry_1 = None;
@@ -78,13 +78,18 @@ class Registerform(tk.Frame):
         registerframe3 = Frame(self)
         registerframe3.pack(fill=X)
 
+        registerframe6 = Frame(self)
+        registerframe6.pack(fill=X)
+
         label_1 = tk.Label(registerframe1, text="Username")
         label_2 = tk.Label(registerframe2, text="Password")
         label_3 = tk.Label(registerframe3, text="Password confirmation")
+        
 
         label_1.pack(side=LEFT,padx=5,pady=5)
         label_2.pack(side=LEFT,padx=5,pady=5)
         label_3.pack(side=LEFT,padx=5,pady=5)
+        
 
         entry_1 = Entry(registerframe1, width=50)
         entry_2 = Entry(registerframe2, width=50, show='*')
@@ -94,18 +99,47 @@ class Registerform(tk.Frame):
         entry_2.pack(side=RIGHT,padx=100)
         entry_3.pack(side=RIGHT,padx=100)
         
-       
+        
 
+         
 
+        def randompw():
+            
+                characters = string.ascii_letters + string.digits
+                pwmessage = "".join(choice(characters) for x in range (randint(8, 12)))
+                print (pwmessage)
+
+                
+
+                registerframePW = Frame(self)
+                registerframePW.pack(fill=X)
+
+                label_PW = tk.Label(registerframePW, text="This is your password. Please, never share it !")
+                label_PW.pack()
+
+                entryText = tk.StringVar()
+                entry_PW = Entry(registerframePW, width=50, textvariable=entryText)
+                entryText.set(pwmessage)
+                entry_PW.pack()
+
+            
+            
+            
+            
+              
         #### nupud
 
 
 
         button1 = tk.Button(self, text="Register", command=regPress)
         button2 = tk.Button(self, text="Already have an account? Login",command=lambda: controller.show_frame("Login"))
+        button3 = tk.Button(self, text="Create a random password",command=randompw)
+
+        
         button2.pack(side=BOTTOM)
-        button1.pack(side=TOP)
-    
+        button1.pack(side=TOP,padx=5,pady=5)
+        button3.pack(side=BOTTOM)
+         
 
 
         
